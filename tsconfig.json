@@ -1,0 +1,17 @@
+{
+  "files": [
+    "src/sprite_animation_demo/*",
+    "src/wolfie2d/data/*",
+    "src/wolfie2d/files/*",
+    "src/wolfie2d/loop/*",
+    "src/wolfie2d/math/*",
+    "src/wolfie2d/rendering/*",
+    "src/wolfie2d/scene/*",
+    "src/wolfie2d/scene/sprite/*",
+    "src/wolfie2d/ui/*"
+  ],
+  "compilerOptions": {
+      "noImplicitAny": true,
+      "target": "es6"
+  }
+}

@@ -1,0 +1,39 @@
+<!--
+    index.html - We will use this Web page to test
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Animated Sprite Demo</title>
+        <style>
+            #game_canvas {
+                position:absolute;
+                left: 0px;
+                top: 0px;
+                background-color: rgb(0,0,0);
+            }
+            #text_canvas {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                pointer-events: none;
+                z-index: 10;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- THIS IS THE CANVAS WHERE WE PUT OUR SPRITES, WHICH
+                ARE RENDERED USING A WebGL RENDERING CONTEXT -->
+        <canvas id="game_canvas"></canvas>
+
+        <!-- THIS CANVAS IS USED FOR RENDERING TEXT, FOR WHICH WE
+                USE A 2d CONTEXT. NOTE THAT WE OVERLAY THIS
+                CANVAS ON TOP OF THE GAME CANVAS -->
+        <canvas id="text_canvas"></canvas>
+
+        <!-- LOAD THE DEMO -->
+        <script src="demo.js"></script>
+    </body>
+</html>

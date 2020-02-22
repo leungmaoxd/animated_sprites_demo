@@ -1,0 +1,18 @@
+{
+    "name": "Red Circle Man",
+    "spriteSheetImage": "resources/images/RedCircleMan.png",
+    "spriteWidth": 256,
+    "spriteHeight": 256,
+    "columns": 8,
+    "rows": 2,
+    "animations": [
+        { 
+            "name": "FORWARD",
+            "frames": [ {"index": 0, "duration":1}, {"index": 1, "duration":2}, {"index": 2, "duration":3}, {"index": 3, "duration":4}, {"index": 4, "duration":5}, {"index": 5, "duration":6}, {"index": 6, "duration":7}, {"index": 7, "duration":8}, {"index": 8, "duration":9}, {"index": 9, "duration":10}, {"index": 10, "duration":11}, {"index": 11, "duration":12}, {"index": 12, "duration":13}, {"index": 13, "duration":14}, {"index": 14, "duration":15}, {"index": 15, "duration":16} ]
+        },
+        {
+            "name": "REVERSE",
+            "frames": [ {"index": 15, "duration":16}, {"index": 14, "duration":15}, {"index": 13, "duration":14}, {"index": 12, "duration":13}, {"index": 11, "duration":12}, {"index": 10, "duration":11}, {"index": 9, "duration":10}, {"index": 8, "duration":9}, {"index": 7, "duration":8}, {"index": 6, "duration":7}, {"index": 5, "duration":6}, {"index": 4, "duration":5}, {"index": 3, "duration":4}, {"index": 2, "duration":3}, {"index": 1, "duration":2},{"index": 0, "duration":1} ]
+        }
+    ]
+}
