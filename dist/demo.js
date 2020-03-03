@@ -1926,6 +1926,22 @@ var SceneGraph = function () {
             this.animatedSprites.push(sprite);
         }
     }, {
+        key: "removeAnimatedSprite",
+        value: function removeAnimatedSprite(sprite) {
+            var temp = new Array();
+            while (this.animatedSprites.length != 0) {
+                var popped = this.animatedSprites.pop();
+                if (popped == sprite) {
+                    break;
+                } else {
+                    temp.push(popped);
+                }
+            }
+            while (temp.length != 0) {
+                this.addAnimatedSprite(temp.pop());
+            }
+        }
+    }, {
         key: "getSpriteAt",
         value: function getSpriteAt(testX, testY) {
             var _iteratorNormalCompletion = true;
@@ -2297,6 +2313,18 @@ var UIController = function () {
 
         _classCallCheck(this, UIController);
 
+        this.doubleClickHandler = function (event) {
+            var mousePressX = event.clientX;
+            var mousePressY = event.clientY;
+            _this.spriteToDrag = _this.scene.getSpriteAt(mousePressX, mousePressY);
+            console.log("mousePressX: " + mousePressX);
+            console.log("mousePressY: " + mousePressY);
+            console.log("sprite: " + _this.spriteToDrag);
+            if (_this.spriteToDrag != null) {
+                // remove from view or delete
+                _this.scene.removeAnimatedSprite(_this.spriteToDrag);
+            }
+        };
         this.mouseDownHandler = function (event) {
             var mousePressX = event.clientX;
             var mousePressY = event.clientY;
@@ -2332,6 +2360,7 @@ var UIController = function () {
             canvas.addEventListener("mousedown", this.mouseDownHandler);
             canvas.addEventListener("mousemove", this.mouseMoveHandler);
             canvas.addEventListener("mouseup", this.mouseUpHandler);
+            canvas.addEventListener("dblclick", this.doubleClickHandler);
         }
     }]);
 

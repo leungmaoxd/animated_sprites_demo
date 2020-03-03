@@ -22,6 +22,30 @@ export class UIController {
         canvas.addEventListener("mousedown", this.mouseDownHandler);
         canvas.addEventListener("mousemove", this.mouseMoveHandler);
         canvas.addEventListener("mouseup", this.mouseUpHandler);
+        canvas.addEventListener("dblclick", this.doubleClickHandler)
+        canvas.addEventListener("click", this.singleClickHandler)
+    }
+    
+    public doubleClickHandler = (event:MouseEvent) : void => {
+        let mousePressX : number = event.clientX;
+        let mousePressY : number = event.clientY;
+        this.spriteToDrag = this.scene.getSpriteAt(mousePressX, mousePressY);
+        console.log("mousePressX: " + mousePressX);
+        console.log("mousePressY: " + mousePressY);
+        console.log("sprite: " + this.spriteToDrag);
+        if (this.spriteToDrag != null) {
+            // remove from view or delete
+            this.scene.removeAnimatedSprite(this.spriteToDrag);
+        }
+    }
+
+    public singleClickHandler = (event:MouseEvent) : void => {
+        let mousePressX : number = event.clientX;
+        let mousePressY : number = event.clientY;
+        this.spriteToDrag = this.scene.getSpriteAt(mousePressX, mousePressY);
+        console.log("mousePressX: " + mousePressX);
+        console.log("mousePressY: " + mousePressY);
+        console.log("sprite: " + this.spriteToDrag);
     }
 
     public mouseDownHandler = (event : MouseEvent) : void => {

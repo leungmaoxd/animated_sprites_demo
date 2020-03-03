@@ -26,6 +26,21 @@ export class SceneGraph {
         this.animatedSprites.push(sprite);
     }
 
+    public removeAnimatedSprite(sprite : AnimatedSprite) : void {
+        let temp : Array<AnimatedSprite> = new Array();
+        while(this.animatedSprites.length!=0){
+            let popped : AnimatedSprite = this.animatedSprites.pop();
+            if(popped == sprite){
+                break;
+            }else{
+                temp.push(popped);
+            }
+        }
+        while(temp.length!=0){
+            this.addAnimatedSprite(temp.pop());
+        }
+    }
+
     public getSpriteAt(testX : number, testY : number) : AnimatedSprite {
         for (let sprite of this.animatedSprites) {
             if (sprite.contains(testX, testY))
