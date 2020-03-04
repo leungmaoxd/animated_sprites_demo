@@ -86,7 +86,7 @@ var AnimatedSpriteDemo = function () {
         value: function buildText(game) {
             var sceneGraph = game.getSceneGraph();
             var numSpritesText = new TextRenderer_1.TextToRender("Num Sprites", "", 20, 50, function () {
-                numSpritesText.text = "Number of Sprites: " + sceneGraph.getNumSprites();
+                numSpritesText.text = "Number of Scene Objects: " + sceneGraph.getNumSprites();
             });
             var textRenderer = game.getRenderingSystem().getTextRenderer();
             textRenderer.addTextToRender(numSpritesText);
@@ -2306,6 +2306,14 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 Object.defineProperty(exports, "__esModule", { value: true });
+/*
+ * This provides responses to UI input.
+ */
+var AnimatedSprite_1 = require("../scene/sprite/AnimatedSprite");
+var DEMO_SPRITE_STATES = {
+    FORWARD_STATE: 'FORWARD',
+    REVERSE_STATE: 'REVERSE'
+};
 
 var UIController = function () {
     function UIController() {
@@ -2323,6 +2331,22 @@ var UIController = function () {
             if (_this.spriteToDrag != null) {
                 // remove from view or delete
                 _this.scene.removeAnimatedSprite(_this.spriteToDrag);
+            }
+        };
+        this.singleClickHandler = function (event) {
+            _this.getSpriteTypes();
+            var mousePressX = event.clientX;
+            var mousePressY = event.clientY;
+            if (_this.scene.getSpriteAt(mousePressX, mousePressY) == null) {
+                var type = void 0;
+                if (Math.random() > .5) {
+                    type = _this.val[0];
+                } else {
+                    type = _this.val[1];
+                }
+                var sprite = new AnimatedSprite_1.AnimatedSprite(type, DEMO_SPRITE_STATES.FORWARD_STATE);
+                sprite.getPosition().set(mousePressX, mousePressY, 0.0, 1.0);
+                _this.scene.addAnimatedSprite(sprite);
             }
         };
         this.mouseDownHandler = function (event) {
@@ -2352,6 +2376,7 @@ var UIController = function () {
     _createClass(UIController, [{
         key: "init",
         value: function init(canvasId, initScene) {
+            this.val = new Array();
             this.spriteToDrag = null;
             this.scene = initScene;
             this.dragOffsetX = -1;
@@ -2361,6 +2386,24 @@ var UIController = function () {
             canvas.addEventListener("mousemove", this.mouseMoveHandler);
             canvas.addEventListener("mouseup", this.mouseUpHandler);
             canvas.addEventListener("dblclick", this.doubleClickHandler);
+            canvas.addEventListener("click", this.singleClickHandler);
+        }
+    }, {
+        key: "getSpriteTypes",
+        value: function getSpriteTypes() {
+            var temp = new Array();
+            var list = this.scene.scope();
+            while (list.length != 0) {
+                var item = list.pop();
+                var type = item.getSpriteType();
+                if (this.val.indexOf(type) < 0) {
+                    this.val.push(type);
+                }
+                temp.push(item);
+            }
+            while (temp.length != 0) {
+                list.push(temp.pop());
+            }
         }
     }]);
 
@@ -2369,6 +2412,6 @@ var UIController = function () {
 
 exports.UIController = UIController;
 
-},{}]},{},[1])
+},{"../scene/sprite/AnimatedSprite":15}]},{},[1])
 
 //# sourceMappingURL=demo.js.map
