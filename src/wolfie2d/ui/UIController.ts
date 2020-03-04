@@ -4,6 +4,8 @@
 import {AnimatedSprite} from "../scene/sprite/AnimatedSprite"
 import {SceneGraph} from "../scene/SceneGraph"
 import { AnimatedSpriteType } from "../scene/sprite/AnimatedSpriteType";
+import { Game } from "../Game";
+import { TextToRender } from "../rendering/TextRenderer";
 const DEMO_SPRITE_STATES = {
     FORWARD_STATE: 'FORWARD',
     REVERSE_STATE: 'REVERSE'
@@ -15,8 +17,10 @@ export class UIController {
     private dragOffsetX : number;
     private dragOffsetY : number;
     private val : Array<AnimatedSpriteType>;
-
-    public constructor() {}
+    private game : Game;
+    public constructor(game : Game) {
+        this.game = game;
+    }
 
     public init(canvasId : string, initScene : SceneGraph) : void {
         this.val = new Array();
@@ -28,10 +32,28 @@ export class UIController {
         canvas.addEventListener("mousedown", this.mouseDownHandler);
         canvas.addEventListener("mousemove", this.mouseMoveHandler);
         canvas.addEventListener("mouseup", this.mouseUpHandler);
-        canvas.addEventListener("dblclick", this.doubleClickHandler)
-        canvas.addEventListener("click", this.singleClickHandler)
+        canvas.addEventListener("dblclick", this.doubleClickHandler);
+        canvas.addEventListener("click", this.singleClickHandler);
+        // canvas.addEventListener("mouseover", this.mouseoverHandler);
     }
     
+    public mouseoverHandler = (event:MouseEvent):void => {
+        let mouseX : number = event.clientX;
+        let mouseY : number = event.clientY;
+        let sprite : AnimatedSprite = this.scene.getSpriteAt(mouseX, mouseY);
+        let textRenderer = this.game.getRenderingSystem().getTextRenderer();
+        let list = textRenderer.getTextList();
+        for (let text of list){
+            if (text.id == "spriteDetails"){
+                if(sprite != null){
+                    text.text= sprite.toString+"";
+                }else{
+                    text.text= "";
+                }
+            }
+        }
+    }
+
     public doubleClickHandler = (event:MouseEvent) : void => {
         let mousePressX : number = event.clientX;
         let mousePressY : number = event.clientY;
@@ -42,6 +64,27 @@ export class UIController {
         if (this.spriteToDrag != null) {
             // remove from view or delete
             this.scene.removeAnimatedSprite(this.spriteToDrag);
+        }
+
+        
+        let mouseX : number = event.clientX;
+        let mouseY : number = event.clientY;
+        
+        let sprite : AnimatedSprite = this.scene.getSpriteAt(mouseX, mouseY);
+        let textRenderer = this.game.getRenderingSystem().getTextRenderer();
+        let list = textRenderer.getTextList();
+        for (let text of list){
+            if (text.id == "spriteDetails"){
+                if(sprite != null){
+                    text.update = function(){
+                        text.text= sprite.toString();
+                    }
+                }else{
+                    text.update = function(){
+                        text.text= "";
+                    }
+                }
+            }
         }
     }
     
@@ -75,6 +118,21 @@ export class UIController {
             let sprite : AnimatedSprite = new AnimatedSprite(type, DEMO_SPRITE_STATES.FORWARD_STATE);
             sprite.getPosition().set(mousePressX, mousePressY, 0.0, 1.0);
             this.scene.addAnimatedSprite(sprite);
+            let textRenderer = this.game.getRenderingSystem().getTextRenderer();
+            let list = textRenderer.getTextList();
+            for (let text of list){
+                if (text.id == "spriteDetails"){
+                    if(sprite != null){
+                        text.update = function(){
+                            text.text= sprite.toString();
+                        }
+                    }else{
+                        text.update = function(){
+                            text.text= "";
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -94,12 +152,33 @@ export class UIController {
     }
     
     public mouseMoveHandler = (event : MouseEvent) : void => {
+        let mouseX : number = event.clientX;
+        let mouseY : number = event.clientY;
+        
+        let sprite : AnimatedSprite = this.scene.getSpriteAt(mouseX, mouseY);
+        let textRenderer = this.game.getRenderingSystem().getTextRenderer();
+        let list = textRenderer.getTextList();
+        for (let text of list){
+            if (text.id == "spriteDetails"){
+                if(sprite != null){
+                    text.update = function(){
+                        text.text= sprite.toString();
+                    }
+                    console.log(text.text);
+                }else{
+                    text.update = function(){
+                        text.text= "";
+                    }
+                }
+            }
+        }
         if (this.spriteToDrag != null) {
-            this.spriteToDrag.getPosition().set(event.clientX + this.dragOffsetX, 
-                                                event.clientY + this.dragOffsetY, 
+            this.spriteToDrag.getPosition().set(mouseX + this.dragOffsetX, 
+                                                mouseY + this.dragOffsetY, 
                                                 this.spriteToDrag.getPosition().getZ(), 
                                                 this.spriteToDrag.getPosition().getW());
         }
+
     }
 
     public mouseUpHandler = (event : MouseEvent) : void => {

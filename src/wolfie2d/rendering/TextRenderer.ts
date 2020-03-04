@@ -79,4 +79,8 @@ export class TextRenderer {
             this.textCtx.fillText(textToRender.text, textToRender.x, textToRender.y);
         }
     }
+
+    public getTextList() : Array<TextToRender>{
+        return this.textToRender;
+    }
 }

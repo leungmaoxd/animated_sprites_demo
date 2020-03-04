@@ -88,6 +88,11 @@ class AnimatedSpriteDemo {
         });
         let textRenderer = game.getRenderingSystem().getTextRenderer();
         textRenderer.addTextToRender(numSpritesText);
+        
+        
+        let spriteDetails = new TextToRender("spriteDetails", "", 20, 100, function() {
+        });
+        textRenderer.addTextToRender(spriteDetails);
     }
 }
 

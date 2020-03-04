@@ -82,7 +82,7 @@ export class AnimatedSprite extends SceneObject {
     }
 
     public toString() : string {
-        let summary : string =  "{ position: ("
+        let summary : string =  "position: ("
                             +   this.getPosition().getX() + ", " + this.getPosition().getY() + ") "
                             +   "(state: " + this.getState() + ") "
                             +   "(animationFrameIndex: " + this.getAnimationFrameIndex() + ") "

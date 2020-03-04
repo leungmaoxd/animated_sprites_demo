@@ -15,7 +15,7 @@ export class Game extends GameLoopTemplate {
     private resourceManager : ResourceManager = new ResourceManager();
     private sceneGraph : SceneGraph = new SceneGraph();
     private renderingSystem : WebGLGameRenderingSystem = new WebGLGameRenderingSystem();
-    private uiController : UIController = new UIController();
+    private uiController : UIController = new UIController(this);
 
     public constructor() {
         super();
